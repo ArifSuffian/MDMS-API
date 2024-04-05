@@ -1,0 +1,3 @@
+<?php
+
+// define("EMPLOYMENT_STATUS_TERMINATE", 1);
