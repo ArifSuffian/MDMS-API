@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Domain\Service\Staff;
-use App\Domain\Repository\StaffRepository;
+
+use app\Domain\Repository\StaffRepository;
 
 final class StaffCreator
 {
@@ -12,21 +13,21 @@ final class StaffCreator
         $this->staffRepo = $staffRepo;
     }
 
-    public function create(string $name,string $email, string $password)
+    public function create(string $name, string $email, string $password)
     {
         try {
             $staff = $this->staffRepo->getStaffByEmail($email);
             if ($staff == null) {
-                    // $rawPassword = 'IRB123';
-                    $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-                    $this->staffRepo->createStaff($name, $email, $hashPassword);
+                // $rawPassword = 'IRB123';
 
-                    $response = (object) [
-                        'status' => 201,
-                        'success' => true,
-                        'message' => 'Registration was successful.'
-                    ];
-                    return $response;
+                $this->staffRepo->createStaff($name, $email, $password);
+
+                $response = (object) [
+                    'status' => 201,
+                    'success' => true,
+                    'message' => 'Registration was successful.'
+                ];
+                return $response;
             } else {
                 $response = (object) [
                     'status' => 200,

@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use Doctrine\DBAL\Connection;
 
-class StaffRepository
+class StudentRepository
 {
     private $connection;
 
@@ -14,11 +14,11 @@ class StaffRepository
     }
 
     //id tk perlu declare (letak autoincre) 
-    public function createStaff( string $name, string $email, string $password ) {
+    public function createStudent( string $name, string $email, string $password ) {
         $query = $this->connection->createQueryBuilder();
 
         $query
-            ->insert('staff')
+            ->insert('student')
             ->values(
                 array(
                     'Name' => '?',
@@ -35,7 +35,7 @@ class StaffRepository
         return $this->connection->lastInsertId();
     }
 
-    public function getAllStaff()
+    public function getAllStudent()
     {
         $query = $this->connection->createQueryBuilder();
 
@@ -45,7 +45,7 @@ class StaffRepository
                 's.Name',
                 's.Email'
             )
-            ->from('staff', 's') //from the staff table and then the s is the shortcut
+            ->from('student', 's') //from the staff table and then the s is the shortcut
             // ->leftJoin('s', 'employment_status', 'es', 's.EmploymentStatus_Id = es.Id')  
             //            shortcutcurrent  ,table yg nk join,  shortcut table nk join, variable = id of tht label  ko tgk jela irb tu 
             ->orderBy('Name');// arrange by name
@@ -53,7 +53,7 @@ class StaffRepository
         return $rows->fetchAllAssociative();
     }
 
-    public function getStaffById(int $id)
+    public function getStudentById(int $id)
     {
         $query = $this->connection->createQueryBuilder();
 
@@ -73,7 +73,7 @@ class StaffRepository
         return $rows->fetchAssociative();
     }
 
-    public function getStaffByEmail(string $email)
+    public function getStudentByEmail(string $email)
     {
         $query = $this->connection->createQueryBuilder();
 
@@ -85,7 +85,7 @@ class StaffRepository
                 's.Password',
                 's.AuthToken'
             )
-            ->from('staff', 's')
+            ->from('student', 's')
             // ->leftJoin('s', 'employment_status', 'es', 'e.EmploymentStatus_Id = es.Id')
             ->where('s.Email = :email') 
             ->setParameter('email', $email);
@@ -93,7 +93,7 @@ class StaffRepository
         return $rows->fetchAssociative();
     }
 
-    public function getStaffByName(string $name)
+    public function getStudentByName(string $name)
     {
         $query = $this->connection->createQueryBuilder();
 
@@ -105,7 +105,7 @@ class StaffRepository
                 's.Password',
                 's.AuthToken'
             )
-            ->from('staff', 's')
+            ->from('student', 's')
             // ->leftJoin('s', 'employment_status', 'es', 'e.EmploymentStatus_Id = es.Id')
             ->where('s.Name = :name') 
             ->setParameter('name', $name);
@@ -113,7 +113,7 @@ class StaffRepository
         return $rows->fetchAssociative();
     }
 
-    public function getStaffByAuthToken(string $token)
+    public function getStudentByAuthToken(string $token)
     {
         $query = $this->connection->createQueryBuilder();
 
@@ -133,7 +133,7 @@ class StaffRepository
         return $rows->fetchAssociative();
     }
 
-    public function updateStaff(
+    public function updateStudent(
         int $id,
         string $name = null,
         string $email = null,
@@ -165,7 +165,7 @@ class StaffRepository
         return $rows > 0;
     }
 
-    public function deleteStaff(
+    public function deleteStudent(
         int $id
     ) {
         $query = $this->connection->createQueryBuilder();
